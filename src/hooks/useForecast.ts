@@ -38,7 +38,7 @@ const useForecast = () => {
         .then(data => {
             const forecastData = {
                 ...data.city,
-                list: data.list.slice(0, 16),
+                list: data.list.filter((_: forecastType, index: number) => index % 8 === 0).slice(0, 5),
             }
 
             setForecast(forecastData)
@@ -47,6 +47,11 @@ const useForecast = () => {
 
     const onOptionSelect = (option: optionType) => {
         setCity(option)
+    }
+
+    const onBack = () => {
+        setForecast(null)
+        setOptions([])
     }
 
     useEffect(() => {
@@ -62,7 +67,8 @@ const useForecast = () => {
         forecast, 
         onInputChange, 
         onOptionSelect, 
-        onSubmit 
+        onSubmit,
+        onBack
     }
 }
 

@@ -1,21 +1,17 @@
 import { forecastType } from "../types"
+import { Degree } from "./Degree"
 
 interface ForecastProps {
     data: forecastType
 }
 
-const Degree = ({ temp }: { temp: number } ) => (
-    <span>
-        {temp}
-        <sup>o</sup>
-    </span>
-)
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const Forecast = ({ data }: ForecastProps) => {
     const today = data.list[0]
 
     return (
-        <div>
+        <div className="flex flex-col gap-6 h-full">
             <section className="text-center">
                 <h2 className="text-2xl font-black">
                     {data.name}
@@ -34,10 +30,10 @@ const Forecast = ({ data }: ForecastProps) => {
                 </p>
             </section>
 
-            <section className="flex overflow-x-scroll mt-4 pb-2 mb-5">
+            <section className="flex pb-2 gap-10">
                 {data.list.map((item, i) => (
-                    <div key={i} className="inline-block text-center w-[50px] flex-shrink-0">
-                        <p>{i === 0 ? 'Now' : new Date(item.dt * 1000).getHours()}</p>
+                    <div key={i} className="flex text-center justify-center items-center w-[50px] flex-col">
+                        <p>{i === 0 ? 'Now' : days[new Date(item.dt * 1000).getDay()]}</p>
                         <img 
                             src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
                             alt = {`weather-icon-${item.weather[0].description}`}

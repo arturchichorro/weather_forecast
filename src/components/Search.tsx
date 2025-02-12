@@ -1,5 +1,7 @@
 import { ChangeEvent } from "react";
 import { optionType } from "../types";
+import Button from "./ui/Button";
+import Input from "./ui/Input";
 
 interface SearchProps {
     term: string
@@ -12,21 +14,21 @@ interface SearchProps {
 const Search = ({ term, options, onInputChange, onOptionSelect, onSubmit }: SearchProps) => {
 
     return (
-        <div className="flex flex-col items-center justify-center w-full gap-2">
+        <div className="flex flex-col items-center justify-center w-full gap-8">
             <h1 className="text-4xl font-bold">Weather Forecast</h1>
-            <p className="text-sm">Search for a city...</p>
             <div className="relative flex gap-2">
-                <input 
+                <Input 
                     type="text"
                     value={term}
                     onChange={onInputChange}
-                    className="rounded-md border-amber-300 border-2"
+                    className="rounded-md border-slate-600 px-2"
+                    placeholder="Search for a city..."
                 />
-                <ul className="absolute top-7 ml-1 rounded-b-md min-w-32 bg-amber-100">
+                <ul className="absolute top-7 ml-1 rounded-b-md min-w-32 bg-slate-100">
                     {options.map((option: optionType, index: number) => (
                         <li key={option.name + '-' + index}>
                             <button
-                                className="text-left w-full hover:bg-amber-300"
+                                className="text-left w-full hover:bg-slate-300"
                                 onClick={() => onOptionSelect(option)}
                             >
                                 {option.name}
@@ -34,12 +36,12 @@ const Search = ({ term, options, onInputChange, onOptionSelect, onSubmit }: Sear
                         </li>
                     ))}
                 </ul>
-                <button
-                    className="rounded-md border-2 border-amber-300 min-w-16 cursor-pointer"
+                <Button
+                    className="text-sm px-2"
                     onClick={onSubmit}
                 >
                     Search
-                </button>
+                </Button>
             </div>
         </div>
     )
