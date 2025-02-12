@@ -1,7 +1,58 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { forecastType, optionType } from "../types";
+import { forecastListElementType, forecastType, optionType } from "../types";
 
 const WEATHER_API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY
+
+function transformForecast(data: forecastType): forecastType {
+    const groupedByDay: { [key: number]: forecastListElementType[] } = {}
+
+    console.log("transformForecast:", data)
+    
+    data.list.forEach(item => {
+        const day = new Date(item.dt * 1000).getDay();
+        if(!groupedByDay[day]) {
+            groupedByDay[day] = [];
+        }
+        groupedByDay[day].push(item);
+    });
+
+    const list: forecastListElementType[] = Object.keys(groupedByDay).map(day => {
+        const dailyData = groupedByDay[Number(day)];
+
+        const temp_max = Math.max(...dailyData.map(item => item.main.temp_max))
+        const temp_min = Math.min(...dailyData.map(item => item.main.temp_min))
+
+        let selectedItem = dailyData.find(item => new Date(item.dt * 1000).getHours() === 12);
+        if (!selectedItem) {
+            selectedItem = dailyData.find(item => new Date(item.dt * 1000).getHours() === 15);
+        }
+        if (!selectedItem) {
+            selectedItem = dailyData.find(item => new Date(item.dt * 1000).getHours() === 9);
+        }
+        if (!selectedItem) {
+            selectedItem = dailyData[0];
+        }
+
+        return {
+            dt: selectedItem.dt,
+            main: {
+                feels_like: selectedItem.main.feels_like,
+                temp: selectedItem.main.temp,
+                temp_max,
+                temp_min
+            },
+            weather: selectedItem.weather
+        };
+    });
+
+    return {
+        city: {
+            name: data.city.name,
+            country: data.city.country
+        },
+        list
+    }
+}
 
 const useForecast = () => {
     const [term, setTerm] = useState<string>('');
@@ -46,14 +97,8 @@ const useForecast = () => {
             const metricData = await metricRes.json();
             const imperialData = await imperialRes.json();
 
-            const metricforecastData = {
-                ...metricData.city,
-                list: metricData.list.filter((_: forecastType, index: number) => index % 8 === 0).slice(0, 5),
-            }
-            const imperialForecastData = {
-                ...imperialData.city,
-                list: imperialData.list.filter((_: forecastType, index: number) => index % 8 === 0).slice(0, 5),
-            }
+            const metricforecastData = transformForecast(metricData)
+            const imperialForecastData = transformForecast(imperialData)
 
             setForecast({
                 metric: metricforecastData,

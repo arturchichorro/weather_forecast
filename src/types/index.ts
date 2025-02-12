@@ -5,14 +5,17 @@ export type optionType = {
 }
 
 export type forecastType = {
-    name: string,
-    country: string
-    list: [{
-        dt: number
+    city: {
+        name: string
+        country: string
+    }
+    list: forecastListElementType[],
+}
+
+export type forecastListElementType = {
+    dt: number
         main: {
             feels_like: number
-            humidity: number
-            pressure: number
             temp: number
             temp_max: number
             temp_min: number
@@ -22,9 +25,6 @@ export type forecastType = {
             icon: string
             description: string
         }]
-    }]
-    sunrise: number
-    sunset: number
 }
 
 export type chartDataElementType = {
