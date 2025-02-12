@@ -18,16 +18,16 @@ const WeatherForecast = () => {
     } = useForecast()
 
     return (
-            <>            
-                <div className="flex justify-end gap-2 py-1 mx-2 sm:mx-4">
-                    <Button className="my-2 px-2 text-sm" onClick={onUnitsChange}>
+            <div className="w-[80%] md:max-w-[60%] flex flex-col justify-center">            
+                <div className="flex justify-end gap-2 mx-2">
+                    <Button className="my-2 py-1 px-4" onClick={onUnitsChange}>
                         <sup>o</sup>{units === "metric" ? "C" : "F"}
                     </Button>
-                    <Button className="my-2 px-2 text-sm" onClick={onBack} disabled={forecast ? false : true}>
+                    <Button className="my-2 py-1 px-4" onClick={onBack} disabled={forecast ? false : true}>
                         <BaselineArrowBack />
                     </Button>
                 </div>
-                <div className="bg-slate-200 bg-repeat bg-[url('/pattern.svg')] border-4 border-double border-slate-600 rounded-2xl p-4 sm:p-6 md:p-10 text-slate-900 flex justify-center items-center min-h-[400px]">
+                <div className="bg-slate-100 bg-repeat bg-[url('/pattern.svg')] border-4 border-double border-slate-600 rounded-2xl text-stone-900 flex flex-grow justify-center items-center py-8 px-2">
                     {forecast ? (
                         units === "metric" ? (
                                 <Forecast data={forecast.metric} units={units} />
@@ -44,7 +44,7 @@ const WeatherForecast = () => {
                         />
                     )}
                 </div>
-            </>
+            </div>
 
     )
 }

@@ -6,8 +6,6 @@ const WEATHER_API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY
 function transformForecast(data: forecastType): forecastType {
     const groupedByDay: { [key: number]: forecastListElementType[] } = {}
 
-    console.log("transformForecast:", data)
-    
     data.list.forEach(item => {
         const day = new Date(item.dt * 1000).getDay();
         if(!groupedByDay[day]) {
@@ -16,8 +14,19 @@ function transformForecast(data: forecastType): forecastType {
         groupedByDay[day].push(item);
     });
 
-    const list: forecastListElementType[] = Object.keys(groupedByDay).map(day => {
-        const dailyData = groupedByDay[Number(day)];
+    const today = new Date().getDay();
+    const daysToKeep = Array.from({ length: 5 }, (_, i) => (today + i) % 7);
+    if (!(groupedByDay[today] && groupedByDay[today].length > 0)) {
+        daysToKeep.shift();
+        daysToKeep.push((today + 5) % 7)
+    }
+
+    const list = []
+    for (let i = 0; i<daysToKeep.length; i++) {
+        const day = daysToKeep[i]
+        if (!groupedByDay[day]) continue
+
+        const dailyData = groupedByDay[day];
 
         const temp_max = Math.max(...dailyData.map(item => item.main.temp_max))
         const temp_min = Math.min(...dailyData.map(item => item.main.temp_min))
@@ -33,7 +42,7 @@ function transformForecast(data: forecastType): forecastType {
             selectedItem = dailyData[0];
         }
 
-        return {
+        list.push({
             dt: selectedItem.dt,
             main: {
                 feels_like: selectedItem.main.feels_like,
@@ -42,8 +51,8 @@ function transformForecast(data: forecastType): forecastType {
                 temp_min
             },
             weather: selectedItem.weather
-        };
-    });
+        });
+    }
 
     return {
         city: {

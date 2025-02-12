@@ -6,9 +6,8 @@
 
 @layer base {
     body {
-        @apply flex justify-center w-full bg-slate-800
+        @apply flex justify-center bg-slate-800
     }
-
 }
 
 :root {
@@ -41,4 +40,3 @@
       --chart-5: 340 75% 55%;
     }
   }
-  

@@ -3,7 +3,7 @@ import WeatherForecast from "./components/WeatherForecast"
 function App() {
 
   return (
-    <main className="container max-w-3xl w-full mt-8">
+    <main className="flex justify-center w-screen">
       <WeatherForecast />
     </main>
   )

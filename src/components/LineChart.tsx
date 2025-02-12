@@ -23,7 +23,7 @@ const chartConfig = {
 
 export function TemperatureChart({ chartData }: { chartData: chartDataElementType[] }) {
   return (
-    <Card>
+    <Card className="bg-slate-100/75">
       <CardHeader>
         <CardTitle className="text-center">5 Day Weather Forecast</CardTitle>
       </CardHeader>

@@ -16,8 +16,6 @@ const Forecast = ({ data, units }: ForecastProps) => {
         temperature: data.main.temp
     }));
 
-    console.log("forecast", data)
-
     function capitalizeFirstLetter(str: string): string {
         if (str.length === 0) {
             return str;
@@ -26,7 +24,7 @@ const Forecast = ({ data, units }: ForecastProps) => {
     }
 
     return (
-        <div className="flex flex-col gap-6 h-full">
+        <div className="flex flex-col gap-6 max-w-[100%]">
             <section className="text-center">
                 <h2 className="text-2xl font-black">
                     {data.city.name}
@@ -45,16 +43,18 @@ const Forecast = ({ data, units }: ForecastProps) => {
                 </p>
             </section>
 
-            <section className="flex pb-2 gap-2">
-                {data.list.map((item, i) => (
-                    <ForecastItem 
-                        key={i}
-                        item={item}
-                        index={i}
-                    />
-                ))}
+            <section>
+                <ul className="flex flex-row gap-4 overflow-y-auto">
+                    {data.list.map((item, i) => (
+                        <li key={i} className="min-w-[100px] py-4 flex flex-col gap-2 text-center justify-center items-center border-2 border-stone-900 bg-slate-400/30 rounded-lg">
+                            <ForecastItem 
+                                item={item}
+                                index={i}
+                            />
+                        </li>
+                    ))}
+                </ul>
             </section>
-
             <section>
                 <TemperatureChart chartData={chartData}/>
             </section>

@@ -17,7 +17,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={`
-            bg-sky-100
+            bg-teal-50
             border
             border-slate-500
             rounded
@@ -26,13 +26,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             transition-all
             duration-100
             focus:shadow-[0_2px_0_#314158]
+            disabled:opacity-50
+            disabled:cursor-not-allowed
             ${error ? 'border-red-500 shadow-[0_4px_0_#dc2626]' : ''}
             ${className}
           `}
           {...props}
         />
         {error && (
-          <p className="text-sm text-red-600">
+          <p className="mt-1 text-sm text-red-600">
             {error}
           </p>
         )}
