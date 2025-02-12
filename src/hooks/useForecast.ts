@@ -81,7 +81,10 @@ const useForecast = () => {
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         setTerm(value)
-        if (value === '') return
+        if (value === '') {
+            setOptions([])
+            return
+        }
 
         getSearchOptions(value)
     }

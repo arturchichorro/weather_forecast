@@ -16,7 +16,7 @@ const Search = ({ term, options, onInputChange, onOptionSelect, onSubmit }: Sear
     return (
         <div className="flex flex-col items-center gap-8">
             <h1 className="text-4xl font-bold text-center">Weather Forecast</h1>
-            <div className="text-lg relative flex items-center gap-3 flex-row">
+            <div className="text-sm sm:text-lg relative flex items-center gap-3 flex-row">
                 <Input 
                     type="text"
                     value={term}
@@ -37,7 +37,7 @@ const Search = ({ term, options, onInputChange, onOptionSelect, onSubmit }: Sear
                     ))}
                 </ul>
                 <Button
-                    className="text-lg px-2 max-w-[80px]"
+                    className="text-sm sm:text-lg px-2 max-w-[80px]"
                     onClick={onSubmit}
                 >
                     Search

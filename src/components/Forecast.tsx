@@ -43,8 +43,8 @@ const Forecast = ({ data, units }: ForecastProps) => {
                 </p>
             </section>
 
-            <section>
-                <ul className="flex flex-row gap-4 overflow-y-auto">
+            <section className="w-full overflow-x-auto whitespace-nowrap no-scrollbar">
+                <ul className="flex flex-row gap-4">
                     {data.list.map((item, i) => (
                         <li key={i} className="min-w-[100px] py-4 flex flex-col gap-2 text-center justify-center items-center border-2 border-dashed border-stone-900 bg-blue-300/60 rounded-lg">
                             <ForecastItem 
