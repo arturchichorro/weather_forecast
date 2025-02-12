@@ -49,7 +49,6 @@ const Forecast = ({ data, units }: ForecastProps) => {
                         <li key={i} className="min-w-[100px] py-4 flex flex-col gap-2 text-center justify-center items-center border-2 border-dashed border-stone-900 bg-blue-300/60 rounded-lg">
                             <ForecastItem 
                                 item={item}
-                                index={i}
                             />
                         </li>
                     ))}

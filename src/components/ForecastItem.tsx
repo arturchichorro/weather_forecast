@@ -4,13 +4,17 @@ import { Degree } from './Degree';
 
 interface ForecastItemProps {
   item: forecastListElementType;
-  index: number;
 }
 
-const ForecastItem = ({ item, index }: ForecastItemProps) => {
+const today = new Date().getDay();
+
+const ForecastItem = ({ item }: ForecastItemProps) => {
+
+  const day = new Date(item.dt * 1000).getDay()
+
   return (
     <>
-      <p className="font-bold">{index === 0 ? 'Now' : days[new Date(item.dt * 1000).getDay()].slice(0, 3)}</p>
+      <p className="font-bold">{today === day ? 'Now' : days[new Date(item.dt * 1000).getDay()].slice(0, 3)}</p>
       <img
         src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
         alt={`weather-icon-${item.weather[0].description}`}
