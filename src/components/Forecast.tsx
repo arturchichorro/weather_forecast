@@ -2,12 +2,13 @@ import { forecastType } from "../types"
 import { Degree } from "./Degree"
 
 interface ForecastProps {
-    data: forecastType
+    data: forecastType,
+    units: "metric" | "imperial"
 }
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-const Forecast = ({ data }: ForecastProps) => {
+const Forecast = ({ data, units }: ForecastProps) => {
     const today = data.list[0]
 
     return (
@@ -18,7 +19,7 @@ const Forecast = ({ data }: ForecastProps) => {
                     <span className="font-thin"> {data.country}</span>
                 </h2>
                 <h1 className="text-4xl font-extrabold">
-                    <Degree temp={Math.round(today.main.temp)}/>
+                    <Degree temp={Math.round(today.main.temp)}/>{units === "metric" ? "C" : "F"}
                 </h1>
                 <p className="text-sm">
                     {today.weather[0].main} {today.weather[0].description}

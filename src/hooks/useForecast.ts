@@ -7,7 +7,8 @@ const useForecast = () => {
     const [term, setTerm] = useState<string>('');
     const [options, setOptions] = useState<[]>([]);
     const [city, setCity] = useState<optionType | null>(null);
-    const [forecast, setForecast] = useState<forecastType | null>(null);
+    const [forecast, setForecast] = useState<{ metric: forecastType, imperial: forecastType } | null>(null);
+    const [units, setUnits] = useState<"metric" | "imperial">("metric");
 
     const getSearchOptions = (value: string) => {
         fetch(
@@ -18,7 +19,7 @@ const useForecast = () => {
     }
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim()
+        const value = e.target.value
         setTerm(value)
         if (value === '') return
 
@@ -30,19 +31,37 @@ const useForecast = () => {
         getForecast(city);
     }
 
-    const getForecast = (city: optionType) => {
-        fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${WEATHER_API_KEY}`
-        )
-        .then(res => res.json())
-        .then(data => {
-            const forecastData = {
-                ...data.city,
-                list: data.list.filter((_: forecastType, index: number) => index % 8 === 0).slice(0, 5),
+
+    const getForecast = async (city: optionType) => {
+        try {
+            const [metricRes, imperialRes] = await Promise.all([
+                fetch(
+                `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${WEATHER_API_KEY}`
+                ),
+                fetch(
+                    `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=imperial&appid=${WEATHER_API_KEY}`
+                )
+            ])
+
+            const metricData = await metricRes.json();
+            const imperialData = await imperialRes.json();
+
+            const metricforecastData = {
+                ...metricData.city,
+                list: metricData.list.filter((_: forecastType, index: number) => index % 8 === 0).slice(0, 5),
+            }
+            const imperialForecastData = {
+                ...imperialData.city,
+                list: imperialData.list.filter((_: forecastType, index: number) => index % 8 === 0).slice(0, 5),
             }
 
-            setForecast(forecastData)
-        })
+            setForecast({
+                metric: metricforecastData,
+                imperial: imperialForecastData
+            })
+        } catch (error) {
+            console.error('Error fetching forecast:', error)
+        }
     }
 
     const onOptionSelect = (option: optionType) => {
@@ -52,7 +71,13 @@ const useForecast = () => {
     const onBack = () => {
         setForecast(null)
         setOptions([])
+        setTerm("")
+        setCity(null)
     }
+
+    const onUnitsChange = () => {
+        setUnits(prevUnits => prevUnits === "metric" ? "imperial" : "metric");
+    };
 
     useEffect(() => {
         if (city) {
@@ -64,11 +89,13 @@ const useForecast = () => {
     return { 
         term, 
         options, 
-        forecast, 
+        forecast,
+        units,
         onInputChange, 
         onOptionSelect, 
         onSubmit,
-        onBack
+        onBack,
+        onUnitsChange
     }
 }
 

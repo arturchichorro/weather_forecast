@@ -7,8 +7,7 @@ export type optionType = {
 export type forecastType = {
     name: string,
     country: string
-    list: [
-        {
+    list: [{
         dt: number
         main: {
             feels_like: number
@@ -23,16 +22,6 @@ export type forecastType = {
             icon: string
             description: string
         }]
-        wind: {
-            speed: number
-            gust: number
-            deg: number
-        }
-        clouds: {
-            all: number
-        }
-        pop: number
-        visibility: number
     }]
     sunrise: number
     sunset: number

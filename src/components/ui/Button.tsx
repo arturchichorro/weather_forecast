@@ -21,6 +21,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           duration-100
           active:shadow-[0_2px_0_#314158]
           active:translate-y-0.5
+          disabled:opacity-50
+          disabled:cursor-not-allowed
+          disabled:active:shadow-[0_4px_0_#314158]
+          disabled:active:translate-y-0
           ${className}
         `}
         {...props}
