@@ -28,7 +28,7 @@ export function TemperatureChart({ chartData }: { chartData: chartDataElementTyp
         <CardTitle className="text-center">5 Day Weather Forecast</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-32 w-full">
+        <ChartContainer config={chartConfig} className="w-full">
           <LineChart
             accessibilityLayer
             data={chartData}
