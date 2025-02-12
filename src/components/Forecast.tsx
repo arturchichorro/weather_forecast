@@ -1,5 +1,6 @@
 import { forecastType } from "../types"
 import { Degree } from "./Degree"
+import { TemperatureChart } from "./LineChart";
 
 interface ForecastProps {
     data: forecastType,
@@ -10,6 +11,12 @@ const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 
 const Forecast = ({ data, units }: ForecastProps) => {
     const today = data.list[0]
+    const chartData = data.list.map(data => ({
+        day: days[new Date(data.dt * 1000).getDay()],
+        temperature: data.main.temp
+    }));
+
+    console.log(chartData)
 
     return (
         <div className="flex flex-col gap-6 h-full">
@@ -44,6 +51,10 @@ const Forecast = ({ data, units }: ForecastProps) => {
                         </p>
                     </div>
                 ))}
+            </section>
+
+            <section>
+                <TemperatureChart chartData={chartData}/>
             </section>
         </div>
     )

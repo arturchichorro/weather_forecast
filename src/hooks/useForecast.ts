@@ -36,7 +36,7 @@ const useForecast = () => {
         try {
             const [metricRes, imperialRes] = await Promise.all([
                 fetch(
-                `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${WEATHER_API_KEY}`
+                    `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${WEATHER_API_KEY}`
                 ),
                 fetch(
                     `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=imperial&appid=${WEATHER_API_KEY}`

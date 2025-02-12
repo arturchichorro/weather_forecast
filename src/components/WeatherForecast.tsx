@@ -18,7 +18,7 @@ const WeatherForecast = () => {
     } = useForecast()
 
     return (
-        <div className="bg-slate-500 px-8 pb-8 rounded-4xl">
+        <div className="border-slate-900 border-2 bg-slate-500 px-8 pb-8 rounded-4xl">
             <div className="flex justify-end gap-2 py-1 mx-4">
                 <Button className="my-2 px-2 text-sm" onClick={onUnitsChange}>
                     <sup>o</sup>{units === "metric" ? "C" : "F"}
@@ -27,7 +27,7 @@ const WeatherForecast = () => {
                     <BaselineArrowBack />
                 </Button>
             </div>
-            <div className="bg-slate-200 border-4 border-dashed border-slate-600 rounded-2xl p-10 text-slate-900 flex justify-center items-center min-h-[400px]">
+            <div className="bg-slate-200 bg-repeat bg-[url('/pattern.svg')] border-4 border-dashed border-slate-600 rounded-2xl p-10 text-slate-900 flex justify-center items-center min-h-[400px]">
                 {forecast ? (
                     units === "metric" ? (
                             <Forecast data={forecast.metric} units={units} />

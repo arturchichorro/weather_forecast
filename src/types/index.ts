@@ -26,3 +26,8 @@ export type forecastType = {
     sunrise: number
     sunset: number
 }
+
+export type chartDataElementType = {
+    day: string
+    temperature: number
+}
