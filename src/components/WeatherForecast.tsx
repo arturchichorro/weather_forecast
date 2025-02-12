@@ -18,7 +18,7 @@ const WeatherForecast = () => {
     } = useForecast()
 
     return (
-            <div className="w-[80%] md:max-w-[60%] flex flex-col justify-center">            
+            <div className="w-[80%] md:max-w-[60%] lg:max-w-[50%] flex flex-col justify-center">            
                 <div className="flex justify-end gap-2 mx-2">
                     <Button className="my-2 py-1 px-4" onClick={onUnitsChange}>
                         <sup>o</sup>{units === "metric" ? "C" : "F"}

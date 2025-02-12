@@ -24,7 +24,7 @@ const Forecast = ({ data, units }: ForecastProps) => {
     }
 
     return (
-        <div className="flex flex-col gap-6 max-w-[100%]">
+        <div className="flex flex-col justify-center items-center gap-6 max-w-[100%]">
             <section className="text-center">
                 <h2 className="text-2xl font-black">
                     {data.city.name}
@@ -46,7 +46,7 @@ const Forecast = ({ data, units }: ForecastProps) => {
             <section>
                 <ul className="flex flex-row gap-4 overflow-y-auto">
                     {data.list.map((item, i) => (
-                        <li key={i} className="min-w-[100px] py-4 flex flex-col gap-2 text-center justify-center items-center border-2 border-stone-900 bg-slate-400/30 rounded-lg">
+                        <li key={i} className="min-w-[100px] py-4 flex flex-col gap-2 text-center justify-center items-center border-2 border-stone-900 bg-slate-400/5 rounded-lg">
                             <ForecastItem 
                                 item={item}
                                 index={i}
@@ -55,7 +55,7 @@ const Forecast = ({ data, units }: ForecastProps) => {
                     ))}
                 </ul>
             </section>
-            <section>
+            <section className="w-[80%]">
                 <TemperatureChart chartData={chartData}/>
             </section>
         </div>
